@@ -20,13 +20,15 @@ class TzeEmailNewsletterController extends Controller
     {
         // Récupérer manager
         $_email_manager = $this->get(ServiceName::SRV_METIER_EMAIL_NEWSLETTER);
-
         // Récupérer tout les emails
         $_emails = $_email_manager->getAllEmailNewsletter();
 
-        return $this->render('AdminBundle:TzeEmailNewsletter:index.html.twig', array(
-            'email_newsletters' => $_emails,
-        ));
+        return $this->render(
+            'AdminBundle:TzeEmailNewsletter:index.html.twig', 
+            array(
+                'email_newsletters' => $_emails,
+            )
+        );
     }
 
     /**
@@ -42,10 +44,13 @@ class TzeEmailNewsletterController extends Controller
 
         $_etze_form = $this->createEditForm($_email);
 
-        return $this->render('AdminBundle:TzeEmailNewsletter:edit.html.twig', array(
-            'email_newsletter' => $_email,
-            'etze_form' => $_etze_form->createView(),
-        ));
+        return $this->render(
+            'AdminBundle:TzeEmailNewsletter:edit.html.twig', 
+            array(
+                'email_newsletter' => $_email,
+                'etze_form' => $_etze_form->createView(),
+            )
+        );
     }
 
     /**
@@ -74,10 +79,13 @@ class TzeEmailNewsletterController extends Controller
             return $this->redirect($this->generateUrl('email_newsletter_index'));
         }
 
-        return $this->render('AdminBundle:TzeEmailNewsletter:add.html.twig', array(
-            'email_newsletter' => $_email,
-            'form' => $_form->createView(),
-        ));
+        return $this->render(
+            'AdminBundle:TzeEmailNewsletter:add.html.twig', 
+            array(
+                'email_newsletter' => $_email,
+                'form' => $_form->createView(),
+            )
+        );
     }
 
     /**
@@ -109,10 +117,13 @@ class TzeEmailNewsletterController extends Controller
             return $this->redirect($this->generateUrl('email_newsletter_index'));
         }
 
-        return $this->render('AdminBundle:TzeEmailNewsletter:edit.html.twig', array(
-            'email_newsletter' => $_email,
-            'etze_form' => $_etze_form->createView(),
-        ));
+        return $this->render(
+            'AdminBundle:TzeEmailNewsletter:edit.html.twig', 
+            array(
+                'email_newsletter' => $_email,
+                'etze_form' => $_etze_form->createView(),
+            )
+        );
     }
 
     /**
@@ -124,10 +135,13 @@ class TzeEmailNewsletterController extends Controller
      */
     private function createCreateForm(TzeEmailNewsletter $_email)
     {
-        $_form = $this->createForm(TzeEmailNewsletterType::class, $_email, array(
-            'action' => $this->generateUrl('email_newsletter_new'),
-            'method' => 'POST',
-        ));
+        $_form = $this->createForm(
+            TzeEmailNewsletterType::class, 
+            $_email, array(
+                'action' => $this->generateUrl('email_newsletter_new'),
+                'method' => 'POST',
+            )
+        );
 
         return $_form;
     }
