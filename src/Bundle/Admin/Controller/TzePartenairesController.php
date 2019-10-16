@@ -37,9 +37,12 @@ class TzePartenairesController extends Controller
         $_partenaires_list = $this->getManager()->getAllTzePartenaires();
 
 //        dump($_partenaires_list ? $_partenaires_list : null);die();
-        return $this->render('AdminBundle:TzePartenaires:index.html.twig', array(
-            'partenaires' => $_partenaires_list,
-        ));
+        return $this->render(
+            'AdminBundle:TzePartenaires:index.html.twig', 
+            array(
+                'partenaires' => $_partenaires_list,
+            )
+        );
     }
 
     /**
@@ -50,10 +53,8 @@ class TzePartenairesController extends Controller
     public function newAction(Request $request)
     {
         $_partenaires = new TzePartenaires();
-
         $_form = $this->createCreateForm($_partenaires);
         $_form->handleRequest($request);
-
         if ($_form->isSubmitted() && $_form->isValid()):
             $_image = $_form['parteImage']->getData();
         $this->getManager()->addPartenaires($_partenaires, $_image);
@@ -65,10 +66,13 @@ class TzePartenairesController extends Controller
         return $this->redirect($this->generateUrl('partenaires_index'));
         endif;
 
-        return $this->render('AdminBundle:TzePartenaires:add.html.twig', array(
-            'partenaires' => $_partenaires,
-            'form' => $_form->createView(),
-        ));
+        return $this->render(
+            'AdminBundle:TzePartenaires:add.html.twig', 
+            array(
+                'partenaires' => $_partenaires,
+                'form' => $_form->createView(),
+            )
+        );
     }
 
     /**
@@ -80,10 +84,13 @@ class TzePartenairesController extends Controller
     {
         $_part_form = $this->createEditForm($_partenaires);
 
-        return $this->render('AdminBundle:TzePartenaires:edit.html.twig', array(
-            'partenaires' => $_partenaires,
-            'part_form' => $_part_form->createView(),
-        ));
+        return $this->render(
+            'AdminBundle:TzePartenaires:edit.html.twig', 
+            array(
+                'partenaires' => $_partenaires,
+                'part_form' => $_part_form->createView(),
+            )
+        );
     }
 
     /**
@@ -104,7 +111,7 @@ class TzePartenairesController extends Controller
                 $this->getManager()->deleteTzePartenaires($_partenaires);
                 $this->getManager()->setFlash('success', 'Partenaires deleted');
             } catch (OptimisticLockException $e) {
-            } catch (ORMException $e) {
+                $this->getManager()->setFlash('error', $e->getMessage());
             }
         endif;
 
